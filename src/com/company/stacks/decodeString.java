@@ -5,17 +5,42 @@ import java.util.Stack;
 // do it again
 public class decodeString {
     public static void main(String[] args) {
-        Stack<Character> s = new Stack<>();
-        String q = "3[a]2[bc]";
-        for (int i = 0 ; i < q.length(); i++){
-            if (q.charAt(i) == ']'){
-                String temp = "";
-                while (!s.isEmpty() && Character.isDigit(s.peek())){
+        System.out.println(decodeString("3[a]12[bc]"));
+    }
 
+    public static String decodeString(String s) {
+        Stack<Integer> countStack = new Stack<>();
+        Stack<StringBuilder> resultStack = new Stack<>();
+        StringBuilder current = new StringBuilder();
+        int index = 0;
+
+        while (index < s.length()) {
+            if (Character.isDigit(s.charAt(index))) {
+                int count = 0;
+                while (index < s.length() && Character.isDigit(s.charAt(index))) {
+                    count = count * 10 + (s.charAt(index) - '0');
+                    index++;
                 }
-            }else if (q.charAt(i) != '['){
-                s.push(q.charAt(i));
+                countStack.push(count);
+            } else if (s.charAt(index) == '[') {
+                resultStack.push(current);
+                current = new StringBuilder();
+                index++;
+            } else if (s.charAt(index) == ']') {
+                StringBuilder temp = current;
+                current = resultStack.pop();
+                int repeatTimes = countStack.pop();
+                for (int i = 0; i < repeatTimes; i++) {
+                    current.append(temp);
+                    System.out.println(current.toString());
+                }
+                index++;
+            } else {
+                current.append(s.charAt(index));
+                index++;
             }
         }
+
+        return current.toString();
     }
 }

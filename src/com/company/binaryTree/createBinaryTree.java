@@ -1,9 +1,7 @@
 package com.company.binaryTree;
 
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Scanner;
-import java.util.Stack;
+import javax.swing.event.MenuDragMouseListener;
+import java.util.*;
 
 class Node{
     int data;
@@ -99,31 +97,65 @@ class Node{
 
 
 
-    static void levelOrderTraversal(Node root){
+    static List<List<Integer>> levelOrderTraversal(Node root){
         Queue<Node> q = new LinkedList<>();
         q.add(null);
         q.add(root);
-        while (q.size() > 1){
-            Node front = q.peek();
-            q.remove();
-            if (front == null){
-                System.out.println();
-                System.out.println("Left view : " +q.peek().data);
-                q.add(null);
+        List<List<Integer>> ans = new ArrayList<>();
+        while (!q.isEmpty()) {
+            int levelSize = q.size();
+            List<Integer> levelNodes = new ArrayList<>();
 
-            }else{
-                System.out.print(front.data + " ");
-                if (front.left != null){
-                    q.add(front.left);
+            for (int i = 0; i < levelSize; i++) {
+                Node front = q.poll();
+
+                if (front != null) {
+                    levelNodes.add(front.data);
+                    if (front.left != null) {
+                        q.add(front.left);
+                    }
+                    if (front.right != null) {
+                        q.add(front.right);
+                    }
                 }
-                if (front.right != null){
-                    q.add(front.right);
-                }
+            }
+
+            if (!levelNodes.isEmpty()) {
+                ans.add(levelNodes);
             }
         }
         if (root == null){
-            return;
+            return ans;
         }
+        return ans;
+    }
+    static List<Integer> morris(Node root){
+        List<Integer> ans = new ArrayList<>();
+        Node curr = root;
+
+        while(curr != null){
+            //left node is null,then, visit it and go right
+            if(curr.left == null){
+                ans.add(curr.data);
+                curr = curr.right;
+            }else{
+                //find inorder predecessor
+                Node pred = curr.left;
+                while(pred.right != curr && pred.right != null){
+                    pred = pred.right;
+                }
+                if(pred.right == null){
+                    pred.right = curr;
+                    curr = curr.left;
+                }else{
+                    // left is already visited
+                    pred.right = null;
+                    ans.add(curr.data);
+                    curr = curr.right;
+                }
+            }
+        }
+        return ans;
     }
 }
 public class createBinaryTree {
@@ -140,8 +172,10 @@ public class createBinaryTree {
         System.out.println("PostOrder Traversal");
         Node.postOrderTraversal(root);
         System.out.println("level order traversal");
-        Node.levelOrderTraversal(root);
-
+        List<List<Integer>> anss = Node.levelOrderTraversal(root);
+        for (int i = 0; i<anss.size(); i++){
+            System.out.println(anss.get(i));
+        }
         Stack<Integer> s = new Stack<>();
         int ans = 0;
         int k = 2;
@@ -154,3 +188,5 @@ public class createBinaryTree {
        // 10 20 40-1 -1 -1 30 50 -1 -1 60 -1 -1
     }
 }
+
+

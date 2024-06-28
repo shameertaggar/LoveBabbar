@@ -42,6 +42,7 @@ public class boundaryTraversal {
         }
 
         System.out.print(root.data + " ");
+        list.add(root.data);
         if (root.left != null){
             printLeftBoundary(root.left,list);
         }else{
@@ -54,7 +55,7 @@ public class boundaryTraversal {
             return;
         }
         if (root.left == null && root.right == null){
-
+            list.add(root.data);
             System.out.print(root.data + " ");
         }
         leafNodeTraverse(root.left,list);
@@ -75,6 +76,7 @@ public class boundaryTraversal {
             printRightBoundary(root.left,list);
         }
         System.out.print(root.data + " ");
+        list.add(root.data);
     }
     public static void main(String[] args) {
         int arr [] = {10,20,40,-1,-1,50,70,110,-1,-1,111,-1,-1,80,-1,-1,30,-1,60,-1,90,112,-1,-1,113,-1,-1};

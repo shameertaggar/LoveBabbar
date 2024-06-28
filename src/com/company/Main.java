@@ -3,41 +3,35 @@ package com.company;
 public class Main {
 
     public static void main(String[] args) {
+        int nums[] = {0,0,1,1,0,0,1};
 
-        //use Math.abs() for sending positive values after that assign sign by checking signs of dividend and divisor
-
-        int divisor = -7;
-        int dividend = 29;
-
-        int ans = getQuotient(Math.abs(dividend),Math.abs(divisor));
-
-        if ((dividend > 0 && divisor < 0) || (dividend < 0 && divisor > 0)){
-            ans = 0-ans;
-        }
-        System.out.println("answer is " + ans);
-
+        int ans = minOperations(nums);
+        System.out.println(ans);
     }
 
-    private static int getQuotient(int dividend, int divisor) {
+    public static int minOperations(int[] nums) {
+        int n = nums.length;
+        int operations = 0;
+        boolean flip = false;
 
-        int s = 0;
-        int e = dividend;
-        int mid = s + (e-s)/2;
-        int quotient = -1;
-
-        while(s<=e) {
-            if (mid * divisor == dividend) {
-                return mid;
-            }if (mid * divisor < dividend) {
-                quotient = mid;
-                s = mid + 1;
-            }else  {
-                e = mid - 1;
+        for (int i = 0; i < n; i++) {
+            // Check if we need to flip the current element based on the number of previous flips
+            if (flip) {
+                nums[i] = 1 - nums[i];
             }
-            mid = s + (e-s)/2;
+
+            // If the current element is 0, we need to flip the rest of the array starting from here
+            if (nums[i] == 0) {
+                operations++;
+                flip = !flip;
+            }
         }
-       return quotient;
+
+        return operations;
+
     }
+
+
 }
  //   int k = n - q;
 //           for (int w = 2*k-1; w > 0; w--){

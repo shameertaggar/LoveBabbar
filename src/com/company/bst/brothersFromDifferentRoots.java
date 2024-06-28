@@ -6,4 +6,7 @@ package com.company.bst;
 // method 4: stack inorder traversal
 // use it with hashSet
 public class brothersFromDifferentRoots {
+    public static void main(String[] args) {
+
+    }
 }

@@ -60,6 +60,5 @@ public class diameterOfBinaryTree {
     public static void main(String[] args) {
         dia d =dia.create();
 
-
     }
 }
