@@ -70,6 +70,7 @@ class gphh{
           System.out.println("Shortest distance to destination vertex " + dest + ": " + dist[dest]);
     }
 
+
 }
 public class dijkstra {
     public static void main(String[] args) {

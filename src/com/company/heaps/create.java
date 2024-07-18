@@ -16,10 +16,11 @@ class heep{
             System.out.println("heep overflow");
             return;
         }
-        size++;
+
         int index = size;
         arr[index] = val;
         heapify(arr,size,index);
+        size++;
     }
 
     void heapify(int arr[], int n, int index){

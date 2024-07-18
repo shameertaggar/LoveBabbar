@@ -88,49 +88,39 @@ class gph{
         st.add(src);
     }
     void shortcutPathbfs(int src, int dest){
-        Queue<Integer> q = new LinkedList<>();
-        HashMap<Integer,Boolean> visited = new HashMap<>();
+        Queue<Integer> q  = new LinkedList<>();
+        HashMap<Integer,Boolean> vis = new HashMap<>();
         HashMap<Integer,Integer> parent = new HashMap<>();
-
-        // Initialize visited and parent maps
-        for (int node : adjList.keySet()) {
-            visited.put(node, false);
-        }
-
-        q.add(src);
-        visited.put(src, true);
+        vis.put(src,true);
         parent.put(src,-1);
-        while (!q.isEmpty()){
-            int frontNode = q.remove();
+        q.add(src);
 
-            if (adjList.containsKey(frontNode)){
-                for (Integer nbr : adjList.get(frontNode)){
-                    if (visited.containsKey(nbr)&&!visited.get(nbr)){
-                        q.add(nbr);
-                        parent.put(nbr,frontNode);
-                        visited.put(nbr,true);
-                    }
+        for (int i = 0; i< adjList.size(); i++){
+            vis.put(i,false);
+        }
+        while(!q.isEmpty()){
+            int vertex = q.remove();
+            for(int key : adjList.get(vertex)){
+                if (!vis.get(key)){
+                    q.add(key);
+                    vis.put(key,true);
+                    parent.put(key,vertex);
                 }
             }
-
         }
 
-        // Reconstruct path from destination to source
-        ArrayList<Integer> ans = new ArrayList<>();
-        int current = dest;
-        while (current != -1) {
-            ans.add(current);
-            current = parent.get(current);
+
+        List<Integer> ans = new ArrayList<>();
+        ans.add(dest);
+        int val = -1;
+        while(val != src){
+            val = parent.get(dest);
+            ans.add(val);
+            dest = val;
         }
+
         Collections.reverse(ans);
-
-// Include the source node in the output path
-        if (!ans.isEmpty() && ans.get(0) == src) {
-            System.out.println("Shortest path from source to destination: " + ans);
-        } else {
-            System.out.println("No path exists from source to destination.");
-        }
-
+        System.out.println(ans);
     }
 }
 public class shortCutPath {

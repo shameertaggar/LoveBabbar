@@ -89,9 +89,9 @@ class heap{
 
     void heapify(int arr[], int n, int index) {
         System.out.println();
-        for (int i = 1; i <= n; i++) {  // Start from index 1 instead of 0
-            System.out.print(arr[i] + " ");
-        }
+//        for (int i = 1; i <= n; i++) {  // Start from index 1 instead of 0
+//            System.out.print(arr[i] + " ");
+//        }
         int left = 2 * index;
         int right = 2 * index + 1;
         int largestIndex = index;
@@ -150,8 +150,8 @@ public class createHeap {
     public static void main(String[] args) {
         heap h = new heap(20);
         h.insert(10);
-        h.insert(5);
         h.insert(20);
+        h.insert(5);
         h.insert(11);
         h.insert(6);
         System.out.println("printing the content of heap");
